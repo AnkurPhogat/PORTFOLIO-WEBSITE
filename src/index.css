@@ -1,25 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --color-primary: #ffffff;
+  --color-secondary: #f8fafc;
+  --color-accent: #3b82f6;
+  --color-textPrimary: #0f172a;
+  --color-textSecondary: #475569;
+  --color-border: #e2e8f0;
+  --color-overlay: rgba(255, 255, 255, 0.7);
+}
+
+.dark {
+  --color-primary: #0a0a0a;
+  --color-secondary: #171717;
+  --color-accent: #3b82f6;
+  --color-textPrimary: #f3f4f6;
+  --color-textSecondary: #9ca3af;
+  --color-border: #1e293b;
+  --color-overlay: rgba(10, 10, 10, 0.8);
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-textPrimary: var(--color-textPrimary);
+  --color-textSecondary: var(--color-textSecondary);
+  --color-border: var(--color-border);
+  --color-overlay: var(--color-overlay);
+  --font-sans: "Inter", sans-serif;
+}
 
 @layer base {
   body {
-    @apply bg-primary text-textPrimary font-sans antialiased overflow-x-hidden m-0 p-0;
+    background-color: var(--color-primary);
+    color: var(--color-textPrimary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-/* Custom scrollbar for premium feel */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-primary;
+  background-color: var(--color-primary);
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-secondary rounded-full;
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent;
+  background-color: var(--color-accent);
 }

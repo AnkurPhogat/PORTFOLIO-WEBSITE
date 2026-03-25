@@ -35,12 +35,27 @@ const skillCategories = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
+};
+
 const About = () => {
   return (
-    <section id="about" className="py-20 relative bg-secondary/30">
+    <section id="about" className="py-20 relative bg-secondary/50 border-y border-border">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
@@ -50,33 +65,41 @@ const About = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-accent to-purple-500 mx-auto rounded-full"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, index) => (
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {skillCategories.map((category) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-secondary p-8 rounded-2xl border border-slate-800 hover:border-accent/50 transition-all group hover:-translate-y-2 shadow-lg hover:shadow-[0_10px_30px_rgba(59,130,246,0.1)]"
+              variants={itemVariants}
+              whileHover={{ y: -10 }}
+              className="bg-primary p-8 rounded-2xl border border-border group shadow-sm hover:shadow-xl hover:shadow-accent/10 transition-shadow duration-300"
             >
-              <div className="flex justify-center group-hover:scale-110 transition-transform duration-300">
+              <motion.div 
+                whileHover={{ scale: 1.2, rotate: 10 }}
+                className="flex justify-center transition-transform duration-300 transform origin-bottom"
+              >
                 {category.icon}
-              </div>
-              <h3 className="text-xl font-semibold text-textPrimary text-center mb-6">{category.title}</h3>
+              </motion.div>
+              <h3 className="text-xl font-bold text-textPrimary text-center mb-6 mt-2">{category.title}</h3>
               <div className="flex flex-wrap justify-center gap-3">
                 {category.skills.map(skill => (
-                  <span
+                  <motion.span
                     key={skill}
-                    className="px-3 py-1 bg-primary text-textSecondary text-sm rounded-full border border-slate-700/50"
+                    whileHover={{ scale: 1.1, backgroundColor: 'var(--color-accent)', color: '#fff' }}
+                    className="px-4 py-1.5 bg-secondary text-textSecondary text-sm font-semibold rounded-full border border-border transition-colors cursor-default"
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
